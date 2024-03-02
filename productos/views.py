@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from pdfdjango.utils.util_pdf import generate_pdf_productos
+from .reports.diploma import generate_Diploma
 
 class ProductoApiView(APIView):
     def get(self, request):
@@ -52,3 +53,12 @@ class ImagenProductoApiView(APIView):
             return Response(producto_serializer.data, status=200)
         except Producto.DoesNotExist:
             return Response(status=404, data='{ "error": "Producto no encontrado"}')
+        
+
+@api_view(['GET'])
+def diploma_ejemplo(request):
+    pdf_file = generate_Diploma([])
+    response = HttpResponse(bytes(pdf_file), content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="diploma.pdf"'
+    return response
+  

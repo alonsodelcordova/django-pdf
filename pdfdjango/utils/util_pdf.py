@@ -43,3 +43,5 @@ def generate_pdf_productos(data):
             row.cell('S/.'+str(producto.precio), align="R")
     
     return pdf.output()
+
+
